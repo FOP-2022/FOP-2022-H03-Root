@@ -10,3 +10,7 @@ submit {
   firstName = "sol_first"
   lastName = "sol_last"
 }
+
+dependencies {
+  testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+}

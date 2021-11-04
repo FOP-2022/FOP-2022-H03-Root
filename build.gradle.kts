@@ -7,7 +7,7 @@ allprojects {
     mavenCentral()
   }
   dependencies {
-    implementation("org.sourcegrade:fopbot:0.1")
+    implementation("org.sourcegrade:fopbot:0.1.0")
   }
   java {
     sourceCompatibility = JavaVersion.VERSION_11
