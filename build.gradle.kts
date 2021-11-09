@@ -24,5 +24,8 @@ allprojects {
     named<Jar>("sourcesJar") {
       archiveFileName.set("${rootProject.name}-${project.name}-sources.jar")
     }
+    test {
+      useJUnitPlatform()
+    }
   }
 }

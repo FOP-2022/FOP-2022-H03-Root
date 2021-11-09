@@ -20,13 +20,13 @@ public class RobotWithInitialState2 extends RobotWithInitialState {
   @Override
   public void pickCoin() {
     super.pickCoin();
-    relativeNumberOfCoins = super.getNumberOfCoins() - super.getInitialNumberOfCoins();
+    relativeNumberOfCoins++;
   }
 
   @Override
   public void putCoin() {
     super.putCoin();
-    relativeNumberOfCoins = super.getNumberOfCoins() - super.getInitialNumberOfCoins();
+    relativeNumberOfCoins--;
   }
 
   @Override

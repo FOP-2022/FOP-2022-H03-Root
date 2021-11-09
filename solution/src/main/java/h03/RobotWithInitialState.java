@@ -86,18 +86,8 @@ public class RobotWithInitialState extends Robot {
    * @return The relative Direction
    */
   public Direction getRelativeDirection() {
-    int directionIndex = getDirection().ordinal();
-    int initialDirectionIndex = getDirection().ordinal();
-
-    if (directionIndex == initialDirectionIndex) {
-      return Direction.UP;
-    } else if ((directionIndex + 3) % 4 == initialDirectionIndex) {
-      return Direction.RIGHT;
-    } else if ((directionIndex + 2) % 4 == initialDirectionIndex) {
-      return Direction.DOWN;
-    } else { //( directionIndex + 2) % 4 == initialDirectionIndex
-      return Direction.LEFT;
-    }
+    int rel = (getDirection().ordinal() - initialDirection.ordinal() + 4) % 4;
+    return Direction.values()[rel];
   }
 
   /**
@@ -116,9 +106,10 @@ public class RobotWithInitialState extends Robot {
   public void setRelativeX(int relativeX) {
     int newX = initialX + relativeX;
     if (newX < 0 || newX >= Main.WORLD_SIZE_X) {
-      return;
+      crash();
+    }else {
+      setX(newX);
     }
-    super.setX(newX);
   }
 
   /**
@@ -127,12 +118,11 @@ public class RobotWithInitialState extends Robot {
    */
   public void setRelativeY(int relativeY) {
     int newY = initialX + relativeY;
-
     if (newY < 0 || newY >= Main.WORLD_SIZE_Y) {
-      return;
+      crash();
+    }else {
+      setY(newY);
     }
-
-    setY(newY);
   }
 
   /**
@@ -152,11 +142,13 @@ public class RobotWithInitialState extends Robot {
    */
   public void setRelativeNumberOfCoins(int relativeNumberOfCoins) {
     int newNumberOfCoins = initialNumberOfCoins + relativeNumberOfCoins;
-    if (relativeNumberOfCoins >= 0 || newNumberOfCoins < 0) {
-      return;
-    }
-    while (newNumberOfCoins < getNumberOfCoins()) {
-      putCoin();
+    if (newNumberOfCoins > getNumberOfCoins() || newNumberOfCoins < 0) {
+      crash();
+    } else {
+      final int putNCoins = getNumberOfCoins() - newNumberOfCoins;
+      for (int i = 0; i < putNCoins; i++) {
+        putCoin();
+      }
     }
   }
 }
