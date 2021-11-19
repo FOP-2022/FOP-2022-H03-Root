@@ -1,6 +1,7 @@
 package h03;
 
 import fopbot.Direction;
+import fopbot.Robot;
 import org.junit.jupiter.api.*;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
@@ -14,125 +15,55 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("H1.2")
 @TestForSubmission("h03")
+
 public class H1_2 {
   @Test
   public void attributesCorrect() {
-    H1.getFields();
-
-    Assertions.assertEquals(Integer.TYPE, H1.field_initialX.getType());
-    Assertions.assertEquals(Integer.TYPE, H1.field_initialY.getType());
-    Assertions.assertEquals(Direction.class, H1.field_initialDirection.getType());
-    Assertions.assertEquals(Integer.TYPE, H1.field_initialNumberOfCoins.getType());
-
-
-    assertTrue(Modifier.isPrivate(H1.field_initialX.getModifiers()));
-    assertTrue(Modifier.isPrivate(H1.field_initialY.getModifiers()));
-    assertTrue(Modifier.isPrivate(H1.field_initialDirection.getModifiers()));
-    assertTrue(Modifier.isPrivate(H1.field_initialNumberOfCoins.getModifiers()));
+    TutorTests.checkAttributeExist(RobotWithInitialState.class, "initialX", Integer.TYPE, true);
+    TutorTests.checkAttributeExist(RobotWithInitialState.class, "initialY", Integer.TYPE, true);
+    TutorTests.checkAttributeExist(RobotWithInitialState.class, "initialDirection", Direction.class, true);
+    TutorTests.checkAttributeExist(RobotWithInitialState.class, "initialNumberOfCoins", Integer.TYPE, true);
   }
 
 
   @Test
-  public void attributesCorrectSet() {
-    H1.getFields();
-    H1.getConstructor();
-
-    H1.field_initialX.setAccessible(true);
-    H1.field_initialY.setAccessible(true);
-    H1.field_initialDirection.setAccessible(true);
-    H1.field_initialNumberOfCoins.setAccessible(true);
-
+  public void attributesCorrectSet() { // in andere Klasse, weil angewiesen auf Konstruktor & Attribute?
     TutorTests.setupWorld(10);
 
-//				run(rob -> (Integer)field_initialX.get(rob),
-//						rob -> (Integer)field_initialY.get(rob),
-//						rob -> (Direction)field_initialDirection.get(rob),
-//						rob -> (Integer)field_initialNumberOfCoins.get(rob));
-
-    int x, y, numberOfCoins;
-    Direction direction;
-    Random random = new Random();
-
-    for (int i = 0; i < 10; i++) {
-      x = random.nextInt(10);
-      y = random.nextInt(10);
-      direction = Direction.values()[random.nextInt(4)];
-      numberOfCoins = random.nextInt(100);
-      RobotWithInitialState rob = null;
-      try {
-        rob = H1.constructor.newInstance(x, y, direction, numberOfCoins);
-
-      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-        | InvocationTargetException e) {
-        fail("Konstruktoraufruf schlägt fehl!");
-        e.printStackTrace();
-      }
 
 
-      try {
-        assertEquals(x, ((Integer) H1.field_initialX.get(rob)));
-        assertEquals(y, ((Integer) H1.field_initialY.get(rob)));
-        assertEquals(direction, ((Direction) H1.field_initialDirection.get(rob)));
-        assertEquals(numberOfCoins, ((Integer) H1.field_initialNumberOfCoins.get(rob)));
-      } catch (IllegalArgumentException | IllegalAccessException e) {
-        // TODO Auto-generated catch block
-        fail("Zugriff nicht möglich");
-        e.printStackTrace();
-      }
+    for(int[] test_element : TutorTests.testvec) {
+      RobotWithInitialState rob = new RobotWithInitialState(test_element[0], test_element[1], Direction.values()[test_element[2]], test_element[3]);
+      assertEquals(test_element[0], (Integer) TutorTests.getAttributeValue(RobotWithInitialState.class, "initialX", rob), "x-Koordinate nicht korrekt in initial-Attribut gespeichert");
+      assertEquals(test_element[1], (Integer) TutorTests.getAttributeValue(RobotWithInitialState.class, "initialY", rob), "y-Koordinate nicht korrekt in initial-Attribut gespeichert");
+      assertEquals(Direction.values()[test_element[2]], (Direction) TutorTests.getAttributeValue(RobotWithInitialState.class, "initialDirection", rob), "Direction nicht korrekt in initial-Attribut gespeichert");
+      assertEquals(test_element[3], (Integer) TutorTests.getAttributeValue(RobotWithInitialState.class, "initialNumberOfCoins", rob), "NumberOfCoins nicht korrekt in initial-Attribut gespeichert");
     }
   }
 
 
   @Test
-  public void getterCorrect() {
-    H1.getGetter();
-    H1.getConstructor();
+  public void getterCorrect(){
 
-    //getter Typen
-    Assertions.assertEquals(Integer.TYPE, H1.method_getInitialX.getReturnType());
-    Assertions.assertEquals(Integer.TYPE, H1.method_getInitialY.getReturnType());
-    Assertions.assertEquals(Direction.class, H1.method_getInitialDirection.getReturnType());
-    Assertions.assertEquals(Integer.TYPE, H1.method_getInitialNumberOfCoins.getReturnType());
-
-    //public
-    assertTrue(Modifier.isPublic(H1.method_getInitialX.getModifiers()));
-    assertTrue(Modifier.isPublic(H1.method_getInitialY.getModifiers()));
-    assertTrue(Modifier.isPublic(H1.method_getInitialDirection.getModifiers()));
-    assertTrue(Modifier.isPublic(H1.method_getInitialNumberOfCoins.getModifiers()));
-
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getInitialX", new Class[]{}, Integer.TYPE);
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getInitialY", new Class[]{}, Integer.TYPE);
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getInitialDirection", new Class[]{}, Direction.class);
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getInitialNumberOfCoins", new Class[]{}, Integer.TYPE);
 
     TutorTests.setupWorld(10);
 
+    for(int[] test_element : TutorTests.testvec) {
+      RobotWithInitialState rob = new RobotWithInitialState(0,0, Direction.UP, 0);
 
-    int x, y, numberOfCoins;
-    Direction direction;
-    Random random = new Random();
+      TutorTests.setAttributeValue(RobotWithInitialState.class, "initialX", rob, test_element[0]);
+      TutorTests.setAttributeValue(RobotWithInitialState.class, "initialY", rob, test_element[1]);
+      TutorTests.setAttributeValue(RobotWithInitialState.class, "initialDirection", rob, Direction.values()[test_element[2]]);
+      TutorTests.setAttributeValue(RobotWithInitialState.class, "initialNumberOfCoins", rob, test_element[3]);
 
-    for (int i = 0; i < 10; i++) {
-      x = random.nextInt(10);
-      y = random.nextInt(10);
-      direction = Direction.values()[random.nextInt(4)];
-      numberOfCoins = random.nextInt(100);
-      RobotWithInitialState rob = null;
-      try {
-        rob = H1.constructor.newInstance(x, y, direction, numberOfCoins);
-
-      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-        | InvocationTargetException e) {
-        fail("Konstruktoraufruf schlägt fehl!");
-        e.printStackTrace();
-      }
-
-
-      try {
-        assertEquals(x, (Integer) H1.method_getInitialX.invoke(rob, new Object[]{}));
-        assertEquals(y, (Integer) H1.method_getInitialY.invoke(rob, new Object[]{}));
-        assertEquals(direction, (Direction) H1.method_getInitialDirection.invoke(rob, new Object[]{}));
-        assertEquals(numberOfCoins, (Integer) H1.method_getInitialNumberOfCoins.invoke(rob, new Object[]{}));
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        fail("Gette-Call nicht möglich");
-        e.printStackTrace();
-      }
+      assertEquals(test_element[0], (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getInitialX", new Class[]{}, rob, new Object[]{}), "getInitialX liefert nicht den Wert von initalX zurück");
+      assertEquals(test_element[1], (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getInitialY", new Class[]{}, rob, new Object[]{}), "getInitialY liefert nicht den Wert von initalY zurück");
+      assertEquals(Direction.values()[test_element[2]], (Direction) TutorTests.callMethod(RobotWithInitialState.class, "getInitialDirection", new Class[]{}, rob, new Object[]{}), "getInitialDirection liefert nicht den Wert von initalDirection zurück");
+      assertEquals(test_element[3], (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getInitialNumberOfCoins", new Class[]{}, rob, new Object[]{}), "getInitialNumberOfCoins liefert nicht den Wert von initalNumberOfCoin zurück");
     }
   }
 }

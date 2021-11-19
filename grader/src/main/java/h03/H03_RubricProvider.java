@@ -8,7 +8,7 @@ public class H03_RubricProvider implements RubricProvider {
   ///////////////////////////////////////////////// H1.1
 
   public static final Criterion H1_1_T1 = Criterion.builder()
-    .shortDescription("RobotWithMemorizedStart ist von Robot abgeleitet.")
+    .shortDescription("RobotWithInitialState wurde korrekt von Robot abgeleitet")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
         H1_1.class.getMethod("robotIsSuperType")))
@@ -18,7 +18,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_1_T2 = Criterion.builder()
-    .shortDescription("RobotWithMemorizedStart ruft den Konstruktor von Robot korrekt auf.")
+    .shortDescription("RobotWithInitialState ruft den Konstruktor von Robot mit den richtigen Parameterwerten auf.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
         H1_1.class.getMethod("constructorCallsSuperCorrect")))
@@ -41,7 +41,7 @@ public class H03_RubricProvider implements RubricProvider {
   ///////////////////////////////////////////////// H1.2
 
   public static final Criterion H1_2_T1 = Criterion.builder()
-    .shortDescription("Alle zusätzlichen Attribute von RobotWithMemorizedStart sind privat und besitzen den richtigen Typ.")
+    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState sind privat & final und besitzen den richtigen Typ.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
         H1_2.class.getMethod("attributesCorrect")))
@@ -51,7 +51,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_2_T2 = Criterion.builder()
-    .shortDescription("Alle zusätzlichen Attribute von RobotWithMemorizedStart werden auf die korrekten Werte gesetzt.")
+    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState werden auf die korrekten Werte gesetzt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
         H1_2.class.getMethod("attributesCorrectSet")))
@@ -61,7 +61,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_2_T3 = Criterion.builder()
-    .shortDescription("Die Getter aller zusätzlichen Attribute von RobotWithMemorizedStart sind korrekt.")
+    .shortDescription("Die Getter (getInitial*) aller zusätzlichen Attribute (initial*) von RobotWithInitialState sind korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
         H1_2.class.getMethod("getterCorrect")))
@@ -71,7 +71,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_2 = Criterion.builder()
-    .shortDescription("Zusätzliche Attribute in der abgeleiteten Klasse und ihre get-Methoden")
+    .shortDescription("H1.2 Zusätzliche Attribute in der abgeleiteten Klasse und ihre get-Methoden")
     .addChildCriteria(
       H1_2_T1,
       H1_2_T2,
@@ -85,9 +85,9 @@ public class H03_RubricProvider implements RubricProvider {
     .shortDescription("getRelativeX, getRelativeY & getRelativeNumberOfCoins funktionieren korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("relativeXYGetterCorrect")))
+        H1_3.class.getMethod("getRelativeXYTest")))
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("relativeNumberOfCoinsTest")))
+        H1_3.class.getMethod("getRelativeNumberOfCoinsTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
@@ -98,7 +98,7 @@ public class H03_RubricProvider implements RubricProvider {
     .shortDescription("getRelativeDirection funktionieren korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("relativeDirectionTest")))
+        H1_3.class.getMethod("getRelativeDirectionTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
@@ -108,7 +108,7 @@ public class H03_RubricProvider implements RubricProvider {
     .shortDescription("setRelativeX & setRelativeY funktionieren korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("setXYTest")))
+        H1_3.class.getMethod("setRelativeXYTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
@@ -118,24 +118,24 @@ public class H03_RubricProvider implements RubricProvider {
     .shortDescription("setRelativeNumberOfCoins funktionieren korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("setNumberTest")))
+        H1_3.class.getMethod("setRelativeNumberOfCoinsTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build();
 
   public static final Criterion H1_3_T5 = Criterion.builder()
-    .shortDescription("setRelativeX & setRelativeY funktionieren korrekt.")
+    .shortDescription("setRelativeDirection funktionieren korrekt.")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H1_3.class.getMethod("setDirectionTest")))
+        H1_3.class.getMethod("setRelativeDirectionTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build();
 
   public static final Criterion H1_3 = Criterion.builder()
-    .shortDescription("Nichtmaterialisierte Attribute")
+    .shortDescription("H1.3 Nichtmaterialisierte Attribute")
     .addChildCriteria(
       H1_3_T1,
       H1_3_T2,
@@ -147,54 +147,73 @@ public class H03_RubricProvider implements RubricProvider {
 
   ///////////////////////////////////////////////// H2
 
-  public static final Criterion H2_T1 = Criterion.builder()
+  public static final Criterion H2_1_T1 = Criterion.builder()
     .shortDescription("RobotWithMemorizedStart2 ist korrekt von RobotWithMemorizedStart abgeleitet")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H2.class.getMethod("isSubType")))
+        H2_1.class.getMethod("isSubType")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build();
 
-  public static final Criterion H2_T2 = Criterion.builder()
-    .shortDescription("RobotWithMemorizedStart2 besitzt das korrekte Attribut relativeNumberOfCoins, ...")
+  public static final Criterion H2_1_T2 = Criterion.builder()
+    .shortDescription("RobotWithInitialState2 besitzt das korrekte Attribut relativeNumberOfCoins, ...")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H2.class.getMethod("relativeNumberOfCoinsAttributeCorrect")))
+        H2_1.class.getMethod("relativeNumberOfCoinsAttributeCorrect")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build(); //TODO relativeNumberOfCoinsTest? anfügen??
 
-  public static final Criterion H2_T3 = Criterion.builder()
-    .shortDescription("RobotWithMemorizedStart2 ruft den Super-Konstruktor korrekt auf")
+  public static final Criterion H2_1_T3 = Criterion.builder()
+    .shortDescription("RobotWithInitialState2 ruft den Konstruktor von RobotWithInitialState korrekt auf")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H2.class.getMethod("constructorCallsSuperCorrect")))
+        H2_1.class.getMethod("constructorCallsSuperCorrect")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build();
 
-  public static final Criterion H2_T4 = Criterion.builder()
+  public static final Criterion H2_1_T4 = Criterion.builder()
     .shortDescription("relativeNumberOfCoins ist tatsächlich materialisiert")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() ->
-        H2.class.getMethod("getRelativeNumberOfCoinsUseMateralised")))
+        H2_1.class.getMethod("getRelativeNumberOfCoinsUseMateralised")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
     ).build();
 
-  public static final Criterion H2 = Criterion.builder()
-    .shortDescription("Roboter mit überschriebener Methode")
+  public static final Criterion H2_1_T5 = Criterion.builder()
+    .shortDescription("relativeNumberOfCoins ist korrekt berechnet")
+    .grader(Grader.testAwareBuilder()
+      .requirePass(JUnitTestRef.ofMethod(() ->
+        H2_1.class.getMethod("relativeNumberOfCoinsTest")))
+      .pointsPassedMax()
+      .pointsFailedMin()
+      .build()
+    ).minPoints(-1).maxPoints(0).build();
+
+
+  public static final Criterion H2_1 = Criterion.builder()
+    .shortDescription("H2.1 Implementierung")
     .addChildCriteria(
-      H2_T1,
-      H2_T2,
-      H2_T3,
-      H2_T4
+      H2_1_T1,
+      H2_1_T2,
+      H2_1_T3,
+      H2_1_T4,
+      H2_1_T5
     )
+    .build();
+
+
+  public static final Criterion H2_2 = Criterion.builder()
+    .shortDescription("H2.2 Testen")
+    .minPoints(0)
+    .maxPoints(2)
     .build();
 
   ///////////////////////////////////////////////// H3
@@ -241,7 +260,7 @@ public class H03_RubricProvider implements RubricProvider {
 
 
   public static final Criterion H3 = Criterion.builder()
-    .shortDescription("Roboter mit überschriebener Methode")
+    .shortDescription("H3 Roboter mit überschriebener Methode")
     .addChildCriteria(
       H3_T1,
       H3_T2,
@@ -252,9 +271,35 @@ public class H03_RubricProvider implements RubricProvider {
     //TODO: ggf abzug noSubClassOfRobot
 
 
+
+  //SO?
+  public static final Criterion H1 = Criterion.builder()
+    .shortDescription("H1 Roboter mit Erinnerung an den Startzustand")
+    .addChildCriteria(
+      H1_1,
+      H1_2,
+      H1_3
+    )
+    .build();
+
+  public static final Criterion H2 = Criterion.builder()
+    .shortDescription("H2 Roboter mit überschriebener Methode")
+    .addChildCriteria(
+      H2_1,
+      H2_2
+    )
+    .build();
+
+  public static final Criterion JAVADOC = Criterion.builder()
+    .shortDescription("Alle selbstgeschriebenen Methoden wurden korrekt mit JavaDoc dokumentiert.")
+    .minPoints(-3)
+    .maxPoints(0)
+    .build();
+
+
   public static final Rubric RUBRIC = Rubric.builder()
     .title("h03")
-    .addChildCriteria(H1_1, H1_2, H1_3, H2, H3)
+    .addChildCriteria(H1, H2, H3, JAVADOC)
     .build();
 
   @Override
