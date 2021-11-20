@@ -1,8 +1,6 @@
 package h03;
+
 import fopbot.*;
-
-
-
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
 import java.lang.reflect.Field;
@@ -15,9 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestForSubmission("h03")
 public class TutorTests {
 
-  static int testvec[][] = { {1, 1, 0, 10},
-                              {2, 5, 3, 100},
-                              {3, 3, 2, 0}}; //TODO: Add
+  static int[][] testvec = {
+    {1, 1, 0, 10},
+    {2, 5, 3, 100},
+    {3, 3, 2, 0}
+  }; //TODO: Add
 
   public static int setupWorld(int size) {
     World.reset();
@@ -52,7 +52,7 @@ public class TutorTests {
     return size;
   }
 
-  public static void checkAttributeExist(Class<?> c, String name, Class<?> type, boolean finalReq){
+  public static void checkAttributeExist(Class<?> c, String name, Class<?> type, boolean finalReq) {
     Field f = null;
     try {
       f = c.getDeclaredField(name);
@@ -61,14 +61,14 @@ public class TutorTests {
     }
     assertEquals(type, f.getType(), "Typ von " + name + "nicht korrekt.");
 
-    assertEquals(true, Modifier.isPrivate(f.getModifiers()), "Attribut " + name + " ist nicht private!");
+    assertTrue(Modifier.isPrivate(f.getModifiers()), "Attribut " + name + " ist nicht private!");
 
-    if(finalReq)
-      assertEquals(true, Modifier.isFinal(f.getModifiers()), "Attribut " + name + " ist nicht final!");
+    if (finalReq) {
+      assertTrue(Modifier.isFinal(f.getModifiers()), "Attribut " + name + " ist nicht final!");
+    }
   }
 
-
-  public static <C> Object getAttributeValue(Class<C> c, String name, C obj){
+  public static <C> Object getAttributeValue(Class<C> c, String name, C obj) {
     Field f = null;
     try {
       f = c.getDeclaredField(name);
@@ -85,8 +85,7 @@ public class TutorTests {
     return null;
   }
 
-
-  public static <C> void setAttributeValue(Class<C> c, String name, C obj, Object val){
+  public static <C> void setAttributeValue(Class<C> c, String name, C obj, Object val) {
     Field f = null;
     try {
       f = c.getDeclaredField(name);
@@ -102,23 +101,22 @@ public class TutorTests {
     }
   }
 
-  public static void checkMethodExist(Class<?> c, String name, Class[] parameterTypes, Class<?> returnType){
+  public static void checkMethodExist(Class<?> c, String name, Class<?>[] parameterTypes, Class<?> returnType) {
     Method m = null;
     try {
       m = c.getDeclaredMethod(name, parameterTypes);
-    } catch (NoSuchMethodException  e) {
+    } catch (NoSuchMethodException e) {
       fail("Methode " + name + " in " + c.getName() + "nicht gefunden");
     }
-    assertEquals(returnType, m.getReturnType(), "Rückgabetyp von " + name + "nicht korrekt.");
-    assertEquals(true, Modifier.isPublic(m.getModifiers()), "Methode " + name + " ist nicht public!");
+    assertSame(returnType, m.getReturnType(), "Rückgabetyp von " + name + "nicht korrekt.");
+    assertTrue(Modifier.isPublic(m.getModifiers()), "Methode " + name + " ist nicht public!");
   }
 
-
-  public static <C> Object callMethod(Class<C> c, String name, Class[] parameterTypes, C obj, Object[] args){
+  public static <C> Object callMethod(Class<C> c, String name, Class<?>[] parameterTypes, C obj, Object[] args) {
     Method m = null;
     try {
       m = c.getDeclaredMethod(name, parameterTypes);
-    } catch (NoSuchMethodException  e) {
+    } catch (NoSuchMethodException e) {
       fail("Methode " + name + " in " + c.getName() + "nicht gefunden");
     }
 
@@ -127,20 +125,20 @@ public class TutorTests {
     } catch (IllegalAccessException e) {
       fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (IllegalAccess)");
     } catch (InvocationTargetException e) {
-      if (e.getTargetException() instanceof RuntimeException){
-        throw (RuntimeException)e.getTargetException();
-      }else{
+      if (e.getTargetException() instanceof RuntimeException) {
+        throw (RuntimeException) e.getTargetException();
+      } else {
         fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (InvocationTarget)");
       }
     }
     return null;
   }
 
-
-  public static boolean checkStackTrace(RuntimeException e, String name){
-    for (StackTraceElement element : e.getStackTrace()){
-      if(element.getMethodName() == name)
+  public static boolean checkStackTrace(RuntimeException e, String name) {
+    for (StackTraceElement element : e.getStackTrace()) {
+      if (element.getMethodName().equals(name)) {
         return true;
+      }
     }
     return false;
   }
