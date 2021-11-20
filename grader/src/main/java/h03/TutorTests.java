@@ -127,12 +127,21 @@ public class TutorTests {
     } catch (IllegalAccessException e) {
       fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (IllegalAccess)");
     } catch (InvocationTargetException e) {
-      fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (InvocationTarget)");
+      if (e.getTargetException() instanceof RuntimeException){
+        throw (RuntimeException)e.getTargetException();
+      }else{
+        fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (InvocationTarget)");
+      }
     }
     return null;
   }
 
 
-
-
+  public static boolean checkStackTrace(RuntimeException e, String name){
+    for (StackTraceElement element : e.getStackTrace()){
+      if(element.getMethodName() == name)
+        return true;
+    }
+    return false;
+  }
 }
