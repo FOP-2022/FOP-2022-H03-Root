@@ -18,7 +18,7 @@ public class H1_1 {
   }
 
   @Test
-  public void constructorCallsSuperCorrect() { //TODO: schauen, ob richtiger Konstruktor aufgerufen wird.... -> Bytecode ansehen
+  public void constructorCallsSuperCorrect() {
     TutorTests.setupWorld(10);
 
     for (int[] test_element : TutorTests.TEST_VECTORS) {

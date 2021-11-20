@@ -17,6 +17,7 @@ public class TutorTests {
     {1, 1, 0, 10},
     {2, 5, 3, 100},
     {3, 3, 2, 0},
+    {5, 5, 1, 6},
   };
 
   public static void setupWorld(int size) {

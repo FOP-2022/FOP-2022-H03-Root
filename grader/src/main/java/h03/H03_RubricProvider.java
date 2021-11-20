@@ -250,7 +250,6 @@ public class H03_RubricProvider implements RubricProvider {
       H3_T4
     )
     .build();
-  //TODO: ggf abzug noSubClassOfRobot
 
   //SO?
   public static final Criterion H1 = Criterion.builder()

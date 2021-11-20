@@ -23,7 +23,7 @@ public class H1_2 {
   }
 
   @Test
-  public void attributesCorrectSet() { // in andere Klasse, weil angewiesen auf Konstruktor & Attribute?
+  public void attributesCorrectSet() {
     TutorTests.setupWorld(10);
 
     for (int[] test_element : TutorTests.TEST_VECTORS) {
