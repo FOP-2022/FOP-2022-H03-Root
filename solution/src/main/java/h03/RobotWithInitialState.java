@@ -107,7 +107,7 @@ public class RobotWithInitialState extends Robot {
     int newX = initialX + relativeX;
     if (newX < 0 || newX >= Main.WORLD_SIZE_X) {
       crash();
-    }else {
+    } else {
       setX(newX);
     }
   }
@@ -120,7 +120,7 @@ public class RobotWithInitialState extends Robot {
     int newY = initialY + relativeY;
     if (newY < 0 || newY >= Main.WORLD_SIZE_Y) {
       crash();
-    }else {
+    } else {
       setY(newY);
     }
   }
