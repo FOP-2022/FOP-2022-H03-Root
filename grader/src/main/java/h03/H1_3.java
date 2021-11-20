@@ -1,124 +1,198 @@
 package h03;
 
-import fopbot.Direction;
-import org.junit.jupiter.api.*;
+import fopbot.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
-import java.lang.reflect.Method;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("H1.3")
 @TestForSubmission("h03")
 public class H1_3 {
 
-  static Method method_getRelativeX, method_getRelativeY, method_getRelativeDirection, method_getRelativeNumberOfCoins;
-
-  private static void getRelativeXYGetter() {
-    try {
-      method_getRelativeX = RobotWithInitialState.class.getDeclaredMethod("getRelativeX", new Class[]{});
-      method_getRelativeY = RobotWithInitialState.class.getDeclaredMethod("getRelativeY", new Class[]{});
-    } catch (NoSuchMethodException | SecurityException e) {
-      fail("Getter nicht gefunden");
-      e.printStackTrace();
-    }
-  }
-
-  private static void getRelativeDirectionGetter() {
-    try {
-      method_getRelativeDirection = RobotWithInitialState.class.getDeclaredMethod("getRelativeDirection", new Class[]{});
-    } catch (NoSuchMethodException | SecurityException e) {
-      fail("Getter nicht gefunden");
-      e.printStackTrace();
-    }
-  }
-
-  private static void getRelativeNumberOfCoinsGetter() {
-    try {
-      method_getRelativeNumberOfCoins = RobotWithInitialState.class.getDeclaredMethod("getRelativeNumberOfCoins", new Class[]{});
-    } catch (NoSuchMethodException | SecurityException e) {
-      fail("Getter nicht gefunden");
-      e.printStackTrace();
-    }
-  }
-
-
   @Test
-  public void relativeGetterExist() { //Attribute existirgenNICHT
-    getRelativeXYGetter();
-    getRelativeDirectionGetter();
-    getRelativeNumberOfCoinsGetter();
-  }
+  public void getRelativeXYTest() {
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getRelativeX", new Class[]{}, Integer.TYPE);
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getRelativeY", new Class[]{}, Integer.TYPE);
 
-  @Test
-  public void relativeXYGetterCorrect() {
-    getRelativeXYGetter();
+    TutorTests.setupWorld(10);
 
-    TutorTests.setupWorld(20);
-    Random random = new Random();
-    RobotWithInitialState rob = new RobotWithInitialState(10, 10, Direction.UP, 100);
-    for (int i = 0; i < 100; i++) {
-      int relX = random.nextInt(20) - 10;
-      int relY = random.nextInt(20) - 10;
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+        rob.setX(test_element[0]);
+        rob.setY(test_element[1]);
 
-      rob.setX(10 + relX);
-      rob.setY(10 + relY);
-
-      assertEquals(relX, rob.getRelativeX());
-      assertEquals(relY, rob.getRelativeY());
+        assertEquals(test_element[0] - test_element_initial[0], (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getRelativeX", new Class[]{}, rob, new Object[]{}), "getRelativeX ist nicht korrekt!");
+        assertEquals(test_element[1] - test_element_initial[1], (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getRelativeY", new Class[]{}, rob, new Object[]{}), "getRelativeY ist nicht korrekt!");
+      }
     }
   }
 
   @Test
-  public void relativeDirectionTest() {
-    getRelativeDirectionGetter();
-    TutorTests.setupWorld(1);
-    for (int r = 0; r < 4; r++) {
-      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.values()[r], 0);
-      //TODO
-      assertEquals(Direction.UP, rob.getRelativeDirection());
-      rob.turnLeft();
-      assertEquals(Direction.LEFT, rob.getRelativeDirection());
-      rob.turnLeft();
-      assertEquals(Direction.DOWN, rob.getRelativeDirection());
-      rob.turnLeft();
-      assertEquals(Direction.RIGHT, rob.getRelativeDirection());
+  public void getRelativeDirectionTest() {
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getRelativeDirection", new Class[]{}, Direction.class);
+
+    TutorTests.setupWorld(10);
+
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+        RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+        int relDirection = (test_element[2] - test_element_initial[2] + 4) % 4;
+        for (int i = 0; i < 4 - relDirection; i++) {
+          rob.turnLeft();
+        }
+        assertEquals(Direction.values()[relDirection], TutorTests.callMethod(RobotWithInitialState.class, "getRelativeDirection", new Class[]{}, rob, new Object[]{}), "getRelativeDirection ist nicht korrekt!");
+      }
     }
   }
 
+  @Test
+  public void getRelativeNumberOfCoinsTest() {
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "getRelativeNumberOfCoins", new Class[]{}, Integer.TYPE);
+
+    TutorTests.setupWorld(10);
+
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+        RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+        if (test_element[3] > test_element_initial[3]) { // Müsste münzen aufnehmen, also Testcase hier ungültig
+          continue;
+        }
+        int relativeNumberOfCoins = test_element[3] - test_element_initial[3];
+        for (int i = 0; i < -relativeNumberOfCoins; i++) {
+          rob.putCoin();
+        }
+
+        assertEquals(relativeNumberOfCoins, (Integer) TutorTests.callMethod(RobotWithInitialState.class, "getRelativeNumberOfCoins", new Class[]{}, rob, new Object[]{}), "getRelativeNumberOfCoins ist nicht korrekt!");
+      }
+    }
+  }
 
   @Test
-  public void relativeNumberOfCoinsTest() {
-    getRelativeNumberOfCoinsGetter();
-    TutorTests.setupWorld(1);
-    RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 100);
+  public void setRelativeXYTest() {
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, Void.TYPE);
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, Void.TYPE);
 
-    for (int i = 1; i < 50; i++) {
+    TutorTests.setupWorld(10);
+
+    //allgemein
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+
+        int relX = test_element[0] - test_element_initial[0];
+        int relY = test_element[1] - test_element_initial[1];
+
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, rob, new Object[]{relX});
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, rob, new Object[]{relY});
+
+        assertEquals(test_element[0], rob.getX(), "setRelativeX ist nicht korrekt!");
+        assertEquals(test_element[1], rob.getY(), "setRelativeY ist nicht korrekt!");
+      }
+    }
+
+    {
+      //crash bei setrelativeX
+      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
+      try {
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
+      } catch (RuntimeException e) {
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "setX"), "setX trotz crash aufgerufen");
+      }
+    }
+    {
+      //crash bei setrelativey
+      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
+      try {
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
+      } catch (RuntimeException e) {
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "setY"), "setY trotz crash aufgerufen");
+      }
+    }
+  }
+
+  @Test
+  public void setRelativeNumberOfCoinsTest() {
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, Void.TYPE);
+
+    TutorTests.setupWorld(10);
+
+    //allgemeine Testfälle
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+        RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+        //eigentlich auch wiederverwendung von rob
+
+        int relNumberOfCoins = test_element[3] - test_element_initial[3];
+
+        if (relNumberOfCoins > 0) {
+          continue;
+        }
+
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{relNumberOfCoins});
+        assertEquals(test_element[3], rob.getNumberOfCoins(), "setRelativeNumberOfCoins ist nicht korrekt!");
+      }
+    }
+
+    {
+      //Testcase Two Stages -> Realtive abhängig von Initial
+      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 10);
+      TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
+      TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{-3});
+      assertEquals(7, rob.getNumberOfCoins(), "setRelativeNumberOfCoins nicht ausgehend von initialNumberOfCoins");
+    }
+
+    {
+      //crash bei > 0
+      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 10);
+      try {
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{1});
+      } catch (RuntimeException e) {
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
+      }
+    }
+
+    {
+      //crash bei pick-versuch
+      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 10);
       rob.putCoin();
       rob.putCoin();
-      assertEquals(-i - 1, rob.getRelativeNumberOfCoins());
-      rob.pickCoin();
-      assertEquals(-i, rob.getRelativeNumberOfCoins());
+      try {
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
+      } catch (RuntimeException e) {
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
+      }
     }
   }
 
   @Test
-  public void setXYTest() {
-    fail();
+  public void setRelativeDirectionTest() {
+
+    TutorTests.checkMethodExist(RobotWithInitialState.class, "setRelativeDirection", new Class[]{Direction.class}, Void.TYPE);
+    TutorTests.setupWorld(10);
+
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
+        RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
+
+        int relDirection = (test_element[2] - test_element_initial[2] + 4) % 4;
+
+        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeDirection", new Class[]{Direction.class}, rob, new Object[]{Direction.values()[relDirection]});
+        assertEquals(Direction.values()[test_element[2]], rob.getDirection(), "setRelativeDirection ist nicht korrekt!");
+      }
+    }
   }
-
-  @Test
-  public void setNumberTest() {
-    fail();
-  }
-
-  @Test
-  public void setDirectionTest() {
-    fail();
-  }
-
-
 }

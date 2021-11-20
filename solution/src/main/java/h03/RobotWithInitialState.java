@@ -107,7 +107,7 @@ public class RobotWithInitialState extends Robot {
     int newX = initialX + relativeX;
     if (newX < 0 || newX >= Main.WORLD_SIZE_X) {
       crash();
-    }else {
+    } else {
       setX(newX);
     }
   }
@@ -117,10 +117,10 @@ public class RobotWithInitialState extends Robot {
    * Robot is only moved, if new y-Coordinate is inside the World
    */
   public void setRelativeY(int relativeY) {
-    int newY = initialX + relativeY;
+    int newY = initialY + relativeY;
     if (newY < 0 || newY >= Main.WORLD_SIZE_Y) {
       crash();
-    }else {
+    } else {
       setY(newY);
     }
   }
@@ -130,7 +130,7 @@ public class RobotWithInitialState extends Robot {
    */
   public void setRelativeDirection(Direction relativeDirection) {
     int newDirection = (initialDirection.ordinal() + relativeDirection.ordinal()) % 4;
-    int numOfTurns = 3 - (newDirection - getDirection().ordinal()) % 4;
+    int numOfTurns = 4 - (4 + newDirection - getDirection().ordinal()) % 4;
     for (int i = 0; i < numOfTurns; i++) {
       turnLeft();
     }
