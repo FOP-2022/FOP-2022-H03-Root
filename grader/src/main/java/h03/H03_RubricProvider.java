@@ -1,11 +1,6 @@
 package h03;
 
-import org.sourcegrade.jagr.api.rubric.Criterion;
-import org.sourcegrade.jagr.api.rubric.Grader;
-import org.sourcegrade.jagr.api.rubric.JUnitTestRef;
-import org.sourcegrade.jagr.api.rubric.Rubric;
-import org.sourcegrade.jagr.api.rubric.RubricForSubmission;
-import org.sourcegrade.jagr.api.rubric.RubricProvider;
+import org.sourcegrade.jagr.api.rubric.*;
 
 @RubricForSubmission("h03")
 public class H03_RubricProvider implements RubricProvider {
