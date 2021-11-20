@@ -203,8 +203,17 @@ public class H03_RubricProvider implements RubricProvider {
     .build();
 
   ///////////////////////////////////////////////// H3
-
   public static final Criterion H3_T1 = Criterion.builder()
+    .shortDescription("TwinRobots ist nicht von Robot abgeleitet und der Konstruktor von TwinRobots ist erkennbar korrekt")
+    .grader(Grader.testAwareBuilder()
+      .requirePass(JUnitTestRef.ofMethod(() -> H3.class.getMethod("constructorTest")))
+      .requirePass(JUnitTestRef.ofMethod(() -> H3.class.getMethod("noSubClassOfRobot")))
+      .pointsPassedMax()
+      .pointsFailedMin()
+      .build()
+    ).build();
+
+  public static final Criterion H3_T2 = Criterion.builder()
     .shortDescription("Die Attribute von TwinRobots sind erkennbar korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H3.class.getMethod("attributesTest")))
@@ -213,14 +222,6 @@ public class H03_RubricProvider implements RubricProvider {
       .build()
     ).build();
 
-  public static final Criterion H3_T2 = Criterion.builder()
-    .shortDescription("Der Konstruktor von TwinRobots ist erkennbar korrekt")
-    .grader(Grader.testAwareBuilder()
-      .requirePass(JUnitTestRef.ofMethod(() -> H3.class.getMethod("constructorTest")))
-      .pointsPassedMax()
-      .pointsFailedMin()
-      .build()
-    ).build();
 
   public static final Criterion H3_T3 = Criterion.builder()
     .shortDescription("Die Methode toggle ist erkennbar korrekt")

@@ -16,7 +16,7 @@ public class H3 {
 
   @Test
   public void noSubClassOfRobot() {
-    assertNotEquals(Robot.class, TwinRobots.class);
+    assertNotEquals(Robot.class, TwinRobots.class.getSuperclass(), "TwinRobots wurde von Robot abgeleitet");
   }
 
   @Test
