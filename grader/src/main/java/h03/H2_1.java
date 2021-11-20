@@ -78,5 +78,22 @@ public class H2_1 {
     }
   }
 
+  @Test
+  public void overridePutPickTest(){
+    //gucken, ob push & put überschrieben
+    try {
+      Method m = RobotWithInitialState2.class.getMethod("putCoin", new Class[]{});
+      assertEquals(RobotWithInitialState2.class, m.getDeclaringClass(), "putCoin nicht in RobotWithInitialState2 überschrieben");
+    } catch (NoSuchMethodException e) {
+      fail("putCoin in RobotWithInitialState2 nicht gefunden");
+    }
+    try {
+      Method m = RobotWithInitialState2.class.getMethod("pickCoin", new Class[]{});
+      assertEquals(RobotWithInitialState2.class, m.getDeclaringClass(), "pickCoin nicht in RobotWithInitialState2 überschrieben");
+    } catch (NoSuchMethodException e) {
+      fail("pickCoin in RobotWithInitialState2 nicht gefunden");
+    }
+  }
+
 
 }

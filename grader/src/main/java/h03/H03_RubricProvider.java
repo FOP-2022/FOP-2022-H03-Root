@@ -22,7 +22,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_1_T2 = Criterion.builder()
-    .shortDescription("RobotWithInitialState ruft den Konstruktor von Robot mit den richtigen Parameterwerten auf.")
+    .shortDescription("RobotWithInitialState ruft den Konstruktor von Robot mit den richtigen Parameterwerten auf")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_1.class.getMethod("constructorCallsSuperCorrect")))
       .pointsPassedMax()
@@ -41,7 +41,7 @@ public class H03_RubricProvider implements RubricProvider {
   ///////////////////////////////////////////////// H1.2
 
   public static final Criterion H1_2_T1 = Criterion.builder()
-    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState sind privat & final und besitzen den richtigen Typ.")
+    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState sind privat & final und besitzen den richtigen Typ")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_2.class.getMethod("attributesCorrect")))
       .pointsPassedMax()
@@ -50,7 +50,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_2_T2 = Criterion.builder()
-    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState werden auf die korrekten Werte gesetzt.")
+    .shortDescription("Alle zusätzlichen Attribute (initial*) von RobotWithInitialState werden auf die korrekten Werte gesetzt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_2.class.getMethod("attributesCorrectSet")))
       .pointsPassedMax()
@@ -59,7 +59,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_2_T3 = Criterion.builder()
-    .shortDescription("Die Getter (getInitial*) aller zusätzlichen Attribute (initial*) von RobotWithInitialState sind korrekt.")
+    .shortDescription("Die Getter (getInitial*) aller zusätzlichen Attribute (initial*) von RobotWithInitialState sind korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_2.class.getMethod("getterCorrect")))
       .pointsPassedMax()
@@ -79,7 +79,7 @@ public class H03_RubricProvider implements RubricProvider {
   ///////////////////////////////////////////////// H1.3
 
   public static final Criterion H1_3_T1 = Criterion.builder()
-    .shortDescription("getRelativeX, getRelativeY & getRelativeNumberOfCoins funktionieren korrekt.")
+    .shortDescription("getRelativeX, getRelativeY & getRelativeNumberOfCoins funktionieren korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("getRelativeXYTest")))
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("getRelativeNumberOfCoinsTest")))
@@ -89,7 +89,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_3_T2 = Criterion.builder()
-    .shortDescription("getRelativeDirection funktionieren korrekt.")
+    .shortDescription("getRelativeDirection funktioniert korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("getRelativeDirectionTest")))
       .pointsPassedMax()
@@ -98,7 +98,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_3_T3 = Criterion.builder()
-    .shortDescription("setRelativeX & setRelativeY funktionieren korrekt.")
+    .shortDescription("setRelativeX & setRelativeY funktionieren korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("setRelativeXYTest")))
       .pointsPassedMax()
@@ -107,7 +107,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_3_T4 = Criterion.builder()
-    .shortDescription("setRelativeNumberOfCoins funktionieren korrekt.")
+    .shortDescription("setRelativeNumberOfCoins funktioniert korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("setRelativeNumberOfCoinsTest")))
       .pointsPassedMax()
@@ -116,7 +116,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H1_3_T5 = Criterion.builder()
-    .shortDescription("setRelativeDirection funktionieren korrekt.")
+    .shortDescription("setRelativeDirection funktioniert korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H1_3.class.getMethod("setRelativeDirectionTest")))
       .pointsPassedMax()
@@ -138,7 +138,7 @@ public class H03_RubricProvider implements RubricProvider {
   ///////////////////////////////////////////////// H2
 
   public static final Criterion H2_1_T1 = Criterion.builder()
-    .shortDescription("RobotWithMemorizedStart2 ist korrekt von RobotWithMemorizedStart abgeleitet")
+    .shortDescription("RobotWithInitialState2 ist korrekt von RobotWithInitialState abgeleitet")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("isSubType")))
       .pointsPassedMax()
@@ -147,7 +147,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H2_1_T2 = Criterion.builder()
-    .shortDescription("RobotWithInitialState2 besitzt das korrekte Attribut relativeNumberOfCoins, ...")
+    .shortDescription("RobotWithInitialState2 besitzt das Attribut relativeNumberOfCoins, welches private, aber nicht final ist")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("relativeNumberOfCoinsAttributeCorrect")))
       .pointsPassedMax()
@@ -179,6 +179,7 @@ public class H03_RubricProvider implements RubricProvider {
     .minPoints(-1)
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("relativeNumberOfCoinsTest")))
+      .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("overridePutPickTest")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
@@ -213,7 +214,7 @@ public class H03_RubricProvider implements RubricProvider {
     ).build();
 
   public static final Criterion H3_T2 = Criterion.builder()
-    .shortDescription("Der Konstruktor von TwinRobots sind korrekt")
+    .shortDescription("Der Konstruktor von TwinRobots is korrekt")
     .grader(Grader.testAwareBuilder()
       .requirePass(JUnitTestRef.ofMethod(() -> H3.class.getMethod("constructorTest")))
       .pointsPassedMax()
@@ -269,7 +270,7 @@ public class H03_RubricProvider implements RubricProvider {
     .build();
 
   public static final Criterion JAVADOC = Criterion.builder()
-    .shortDescription("Alle selbstgeschriebenen Methoden wurden korrekt mit JavaDoc dokumentiert.")
+    .shortDescription("Alle selbstgeschriebenen Methoden wurden korrekt mit JavaDoc dokumentiert")
     .maxPoints(0)
     .minPoints(-3)
     .build();
