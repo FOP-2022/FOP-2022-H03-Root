@@ -13,43 +13,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestForSubmission("h03")
 public class TutorTests {
 
-  static int[][] testvec = {
+  static int[][] TEST_VECTORS = {
     {1, 1, 0, 10},
     {2, 5, 3, 100},
-    {3, 3, 2, 0}
-  }; //TODO: Add
+    {3, 3, 2, 0},
+  };
 
-  public static int setupWorld(int size) {
+  public static void setupWorld(int size) {
     World.reset();
     World.setSize(size, size);
     World.setDelay(0);
     World.setVisible(false);
-
-    /*
-    //set in MAIN -> //TODO: Wollen wir auch andere Größen für die Tests?
-    try {
-      Field field_size_x = Main.class.getDeclaredField("WORLD_SIZE_X");
-      field_size_x.setAccessible(true);
-
-      Field modifiers = Field.class.getDeclaredField("modifiers");
-      modifiers.setAccessible(true);
-      modifiers.setInt(field_size_x, field_size_x.getModifiers() & ~Modifier.FINAL);
-
-      field_size_x.setInt(null, size);
-
-      Field field_size_y = Main.class.getDeclaredField("WORLD_SIZE_Y");
-      field_size_y.setAccessible(true);
-
-      modifiers.setInt(field_size_y, field_size_y.getModifiers() & ~Modifier.FINAL);
-
-      field_size_y.setInt(null, size);
-
-    } catch (NoSuchFieldException | IllegalAccessException e) {
-      //throw new RuntimeException("WORLD_SIZE_* konnte nicht gesetzt werden!!!");
-      e.printStackTrace();
-    }*/
-
-    return size;
   }
 
   public static void checkAttributeExist(Class<?> c, String name, Class<?> type, boolean finalReq) {
@@ -108,7 +82,7 @@ public class TutorTests {
     } catch (NoSuchMethodException e) {
       fail("Methode " + name + " in " + c.getName() + "nicht gefunden");
     }
-    assertSame(returnType, m.getReturnType(), "Rückgabetyp von " + name + "nicht korrekt.");
+    assertEquals(returnType, m.getReturnType(), "Rückgabetyp von " + name + "nicht korrekt.");
     assertTrue(Modifier.isPublic(m.getModifiers()), "Methode " + name + " ist nicht public!");
   }
 

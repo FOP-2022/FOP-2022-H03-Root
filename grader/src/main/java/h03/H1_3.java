@@ -1,15 +1,13 @@
 package h03;
 
-import fopbot.Direction;
-import fopbot.Robot;
-import org.junit.jupiter.api.*;
+import fopbot.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
-import java.lang.reflect.Method;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("H1.3")
@@ -23,9 +21,9 @@ public class H1_3 {
 
     TutorTests.setupWorld(10);
 
-    for(int[] test_element_initial : TutorTests.testvec){
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
       RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
-      for(int[] test_element : TutorTests.testvec) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
         rob.setX(test_element[0]);
         rob.setY(test_element[1]);
 
@@ -35,25 +33,23 @@ public class H1_3 {
     }
   }
 
-
   @Test
   public void getRelativeDirectionTest() {
     TutorTests.checkMethodExist(RobotWithInitialState.class, "getRelativeDirection", new Class[]{}, Direction.class);
 
     TutorTests.setupWorld(10);
 
-    for(int[] test_element_initial : TutorTests.testvec){
-      for(int[] test_element : TutorTests.testvec) {
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
         RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
         int relDirection = (test_element[2] - test_element_initial[2] + 4) % 4;
-        for(int i = 0; i < 4 - relDirection; i++) {
+        for (int i = 0; i < 4 - relDirection; i++) {
           rob.turnLeft();
         }
-        assertEquals(Direction.values()[relDirection], (Direction) TutorTests.callMethod(RobotWithInitialState.class, "getRelativeDirection", new Class[]{}, rob, new Object[]{}), "getRelativeDirection ist nicht korrekt!");
+        assertEquals(Direction.values()[relDirection], TutorTests.callMethod(RobotWithInitialState.class, "getRelativeDirection", new Class[]{}, rob, new Object[]{}), "getRelativeDirection ist nicht korrekt!");
       }
     }
   }
-
 
   @Test
   public void getRelativeNumberOfCoinsTest() {
@@ -61,14 +57,14 @@ public class H1_3 {
 
     TutorTests.setupWorld(10);
 
-    for(int[] test_element_initial : TutorTests.testvec){
-      for(int[] test_element : TutorTests.testvec) {
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
         RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
-        if(test_element[3] > test_element_initial[3]) { // Müsste münzen aufnehmen, also Testcase hier ungültig
+        if (test_element[3] > test_element_initial[3]) { // Müsste münzen aufnehmen, also Testcase hier ungültig
           continue;
         }
         int relativeNumberOfCoins = test_element[3] - test_element_initial[3];
-        for(int i = 0; i < -relativeNumberOfCoins; i++) {
+        for (int i = 0; i < -relativeNumberOfCoins; i++) {
           rob.putCoin();
         }
 
@@ -76,7 +72,6 @@ public class H1_3 {
       }
     }
   }
-
 
   @Test
   public void setRelativeXYTest() {
@@ -86,9 +81,9 @@ public class H1_3 {
     TutorTests.setupWorld(10);
 
     //allgemein
-    for(int[] test_element_initial : TutorTests.testvec){
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
       RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
-      for(int[] test_element : TutorTests.testvec) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
 
         int relX = test_element[0] - test_element_initial[0];
         int relY = test_element[1] - test_element_initial[1];
@@ -100,7 +95,6 @@ public class H1_3 {
         assertEquals(test_element[1], rob.getY(), "setRelativeY ist nicht korrekt!");
       }
     }
-
 
     {
       //crash bei setrelativeX
@@ -133,14 +127,14 @@ public class H1_3 {
     TutorTests.setupWorld(10);
 
     //allgemeine Testfälle
-    for(int[] test_element_initial : TutorTests.testvec){
-      for(int[] test_element : TutorTests.testvec) {
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
         RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
         //eigentlich auch wiederverwendung von rob
 
         int relNumberOfCoins = test_element[3] - test_element_initial[3];
 
-        if(relNumberOfCoins > 0) //ausgeschlossen
+        if (relNumberOfCoins > 0) //ausgeschlossen
           continue;
 
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{relNumberOfCoins});
@@ -189,8 +183,8 @@ public class H1_3 {
     TutorTests.checkMethodExist(RobotWithInitialState.class, "setRelativeDirection", new Class[]{Direction.class}, Void.TYPE);
     TutorTests.setupWorld(10);
 
-    for(int[] test_element_initial : TutorTests.testvec){
-      for(int[] test_element : TutorTests.testvec) {
+    for (int[] test_element_initial : TutorTests.TEST_VECTORS) {
+      for (int[] test_element : TutorTests.TEST_VECTORS) {
         RobotWithInitialState rob = new RobotWithInitialState(test_element_initial[0], test_element_initial[1], Direction.values()[test_element_initial[2]], test_element_initial[3]);
 
         int relDirection = (test_element[2] - test_element_initial[2] + 4) % 4;
@@ -199,11 +193,5 @@ public class H1_3 {
         assertEquals(Direction.values()[test_element[2]], rob.getDirection(), "setRelativeDirection ist nicht korrekt!");
       }
     }
-
   }
-
-
-
-
-
 }

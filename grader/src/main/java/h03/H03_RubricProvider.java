@@ -167,7 +167,7 @@ public class H03_RubricProvider implements RubricProvider {
   public static final Criterion H2_1_T4 = Criterion.builder()
     .shortDescription("relativeNumberOfCoins ist tatsächlich materialisiert")
     .grader(Grader.testAwareBuilder()
-      .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("getRelativeNumberOfCoinsUseMateralised")))
+      .requirePass(JUnitTestRef.ofMethod(() -> H2_1.class.getMethod("getRelativeNumberOfCoinsUseMaterialized")))
       .pointsPassedMax()
       .pointsFailedMin()
       .build()
@@ -270,8 +270,7 @@ public class H03_RubricProvider implements RubricProvider {
     )
     .build();
 
-
-  public static final Criterion VARIABLE_WORLDSIZE = Criterion.builder()
+  public static final Criterion VARIABLE_WORLD_SIZE = Criterion.builder()
     .shortDescription("Die Abgabe funktioniert erkennbar korrekt für verschiedene Weltgrößen")
     .maxPoints(0)
     .minPoints(-2)
@@ -285,7 +284,7 @@ public class H03_RubricProvider implements RubricProvider {
 
   public static final Rubric RUBRIC = Rubric.builder()
     .title("h03")
-    .addChildCriteria(H1, H2, H3, VARIABLE_WORLDSIZE, JAVADOC)
+    .addChildCriteria(H1, H2, H3, VARIABLE_WORLD_SIZE, JAVADOC)
     .build();
 
   @Override
