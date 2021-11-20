@@ -62,7 +62,6 @@ public class H3 {
     Robot rob1 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin1", twinRobot);
     Robot rob2 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin2", twinRobot);
 
-    TwinRobots rob = new TwinRobots();
     TutorTests.setAttributeValue(TwinRobots.class, "firstTwinIsCurrent", twinRobot, true);
     assertEquals(rob1, twinRobot.getCurrentRobot(), "getCurrentRobot liefert nicht twin1 bei firstTwinIsCurrent=true zurück");
     TutorTests.setAttributeValue(TwinRobots.class, "firstTwinIsCurrent", twinRobot, false);

@@ -10,7 +10,6 @@ import java.lang.reflect.Modifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestForSubmission("h03")
 public class TutorTests {
 
   static int[][] TEST_VECTORS = {

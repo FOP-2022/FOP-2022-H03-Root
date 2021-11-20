@@ -102,9 +102,9 @@ public class H1_3 {
       try {
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
       } catch (RuntimeException e) {
-        assertEquals(true, TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "setX"), "setX trotz crash aufgerufen");
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "setX"), "setX trotz crash aufgerufen");
       }
     }
     {
@@ -113,9 +113,9 @@ public class H1_3 {
       try {
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
       } catch (RuntimeException e) {
-        assertEquals(true, TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "setY"), "setY trotz crash aufgerufen");
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "setY"), "setY trotz crash aufgerufen");
       }
     }
   }
@@ -134,8 +134,9 @@ public class H1_3 {
 
         int relNumberOfCoins = test_element[3] - test_element_initial[3];
 
-        if (relNumberOfCoins > 0) //ausgeschlossen
+        if (relNumberOfCoins > 0) {
           continue;
+        }
 
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{relNumberOfCoins});
         assertEquals(test_element[3], rob.getNumberOfCoins(), "setRelativeNumberOfCoins ist nicht korrekt!");
@@ -156,9 +157,9 @@ public class H1_3 {
       try {
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{1});
       } catch (RuntimeException e) {
-        assertEquals(true, TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
       }
     }
 
@@ -170,9 +171,9 @@ public class H1_3 {
       try {
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
       } catch (RuntimeException e) {
-        assertEquals(true, TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
-        assertEquals(false, TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
+        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "putCoin"), "putCoin trotz crash aufgerufen");
+        assertFalse(TutorTests.checkStackTrace(e, "pickCoin"), "pickCoin trotz crash aufgerufen");
       }
     }
   }
