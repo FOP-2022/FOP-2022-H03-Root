@@ -4,6 +4,9 @@ import fopbot.*;
 import org.junit.jupiter.api.Test;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestForSubmission("h03")
@@ -21,11 +24,31 @@ public class H3 {
     TutorTests.checkAttributeExist(TwinRobots.class, "firstTwinIsCurrent", Boolean.TYPE, false);
   }
 
+
+  private TwinRobots getTwinRobot(){
+    Constructor<TwinRobots> constructor = null;
+    try {
+      constructor = TwinRobots.class.getDeclaredConstructor(new Class[]{});
+    } catch (NoSuchMethodException e) {
+      fail("Constructor for TwinRobots not found");
+    }
+    constructor.setAccessible(true);
+
+    try {
+      return constructor.newInstance(new Object[]{});
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      fail("Constructor newInstance Error");
+    }
+    return null;
+  }
+
+
+
   @Test
   public void constructorTest() {
     TutorTests.setupWorld(10);
 
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
     Robot rob1 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin1", twinRobot);
     Robot rob2 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin2", twinRobot);
 
@@ -43,7 +66,7 @@ public class H3 {
   @Test
   public void toggleTest() {
     TutorTests.setupWorld(10);
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
 
     TutorTests.setAttributeValue(TwinRobots.class, "firstTwinIsCurrent", twinRobot, true);
     for (int i = 0; i < 10; i++) {
@@ -57,7 +80,7 @@ public class H3 {
   @Test
   public void getCurrentRobotTest() {
     TutorTests.setupWorld(10);
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
 
     Robot rob1 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin1", twinRobot);
     Robot rob2 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin2", twinRobot);
