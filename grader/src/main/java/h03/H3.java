@@ -38,7 +38,7 @@ public class H3 {
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
       fail("Constructor newInstance Error", e);
     }
-    return null;
+    throw new AssertionError();
   }
 
   @Test
