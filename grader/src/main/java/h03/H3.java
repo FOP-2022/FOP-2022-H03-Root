@@ -24,25 +24,22 @@ public class H3 {
     TutorTests.checkAttributeExist(TwinRobots.class, "firstTwinIsCurrent", Boolean.TYPE, false);
   }
 
-
-  private TwinRobots getTwinRobot(){
+  private TwinRobots getTwinRobot() {
     Constructor<TwinRobots> constructor = null;
     try {
-      constructor = TwinRobots.class.getDeclaredConstructor(new Class[]{});
+      constructor = TwinRobots.class.getDeclaredConstructor();
     } catch (NoSuchMethodException e) {
-      fail("Constructor for TwinRobots not found");
+      fail("Constructor for TwinRobots not found", e);
     }
     constructor.setAccessible(true);
 
     try {
-      return constructor.newInstance(new Object[]{});
+      return constructor.newInstance();
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      fail("Constructor newInstance Error");
+      fail("Constructor newInstance Error", e);
     }
     return null;
   }
-
-
 
   @Test
   public void constructorTest() {
