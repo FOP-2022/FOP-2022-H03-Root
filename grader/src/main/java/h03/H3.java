@@ -2,7 +2,11 @@ package h03;
 
 import fopbot.*;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,11 +25,27 @@ public class H3 {
     TutorTests.checkAttributeExist(TwinRobots.class, "firstTwinIsCurrent", Boolean.TYPE, false);
   }
 
+  private TwinRobots getTwinRobot() {
+    Constructor<TwinRobots> constructor;
+    try {
+      constructor = TwinRobots.class.getDeclaredConstructor();
+    } catch (NoSuchMethodException e) {
+      throw new AssertionFailedError("Constructor for TwinRobots not found", e);
+    }
+    constructor.setAccessible(true);
+
+    try {
+      return constructor.newInstance();
+    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new AssertionFailedError("Constructor newInstance Error", e);
+    }
+  }
+
   @Test
   public void constructorTest() {
     TutorTests.setupWorld(10);
 
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
     Robot rob1 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin1", twinRobot);
     Robot rob2 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin2", twinRobot);
 
@@ -43,7 +63,7 @@ public class H3 {
   @Test
   public void toggleTest() {
     TutorTests.setupWorld(10);
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
 
     TutorTests.setAttributeValue(TwinRobots.class, "firstTwinIsCurrent", twinRobot, true);
     for (int i = 0; i < 10; i++) {
@@ -57,7 +77,7 @@ public class H3 {
   @Test
   public void getCurrentRobotTest() {
     TutorTests.setupWorld(10);
-    TwinRobots twinRobot = new TwinRobots();
+    TwinRobots twinRobot = getTwinRobot();
 
     Robot rob1 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin1", twinRobot);
     Robot rob2 = (Robot) TutorTests.getAttributeValue(TwinRobots.class, "twin2", twinRobot);
