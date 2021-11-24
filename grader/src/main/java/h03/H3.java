@@ -2,6 +2,7 @@ package h03;
 
 import fopbot.*;
 import org.junit.jupiter.api.Test;
+import org.opentest4j.AssertionFailedError;
 import org.sourcegrade.jagr.api.rubric.TestForSubmission;
 
 import java.lang.reflect.Constructor;
@@ -25,20 +26,19 @@ public class H3 {
   }
 
   private TwinRobots getTwinRobot() {
-    Constructor<TwinRobots> constructor = null;
+    Constructor<TwinRobots> constructor;
     try {
       constructor = TwinRobots.class.getDeclaredConstructor();
     } catch (NoSuchMethodException e) {
-      fail("Constructor for TwinRobots not found", e);
+      throw new AssertionFailedError("Constructor for TwinRobots not found", e);
     }
     constructor.setAccessible(true);
 
     try {
       return constructor.newInstance();
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      fail("Constructor newInstance Error", e);
+      throw new AssertionFailedError("Constructor newInstance Error", e);
     }
-    throw new AssertionError();
   }
 
   @Test
