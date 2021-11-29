@@ -31,9 +31,9 @@ public class TutorTests {
     try {
       f = c.getDeclaredField(name);
     } catch (NoSuchFieldException e) {
-      fail("Attribut " + name + " in " + c.getName() + "nicht gefunden");
+      fail("Attribut " + name + " in " + c.getName() + " nicht gefunden");
     }
-    assertEquals(type, f.getType(), "Typ von " + name + "nicht korrekt.");
+    assertEquals(type, f.getType(), "Typ von " + name + " nicht korrekt.");
 
     assertTrue(Modifier.isPrivate(f.getModifiers()), "Attribut " + name + " ist nicht private!");
 
@@ -47,7 +47,7 @@ public class TutorTests {
     try {
       f = c.getDeclaredField(name);
     } catch (NoSuchFieldException e) {
-      fail("Attribut " + name + " in " + c.getName() + "nicht gefunden");
+      fail("Attribut " + name + " in " + c.getName() + " nicht gefunden");
     }
     f.setAccessible(true);
 
@@ -64,7 +64,7 @@ public class TutorTests {
     try {
       f = c.getDeclaredField(name);
     } catch (NoSuchFieldException e) {
-      fail("Attribut " + name + " in " + c.getName() + "nicht gefunden");
+      fail("Attribut " + name + " in " + c.getName() + " nicht gefunden");
     }
     f.setAccessible(true);
 
@@ -80,9 +80,9 @@ public class TutorTests {
     try {
       m = c.getDeclaredMethod(name, parameterTypes);
     } catch (NoSuchMethodException e) {
-      fail("Methode " + name + " in " + c.getName() + "nicht gefunden");
+      fail("Methode " + name + " in " + c.getName() + " nicht gefunden");
     }
-    assertEquals(returnType, m.getReturnType(), "Rückgabetyp von " + name + "nicht korrekt.");
+    assertEquals(returnType, m.getReturnType(), "Rückgabetyp von " + name + " nicht korrekt.");
     assertTrue(Modifier.isPublic(m.getModifiers()), "Methode " + name + " ist nicht public!");
   }
 
@@ -91,18 +91,18 @@ public class TutorTests {
     try {
       m = c.getDeclaredMethod(name, parameterTypes);
     } catch (NoSuchMethodException e) {
-      fail("Methode " + name + " in " + c.getName() + "nicht gefunden");
+      fail("Methode " + name + " in " + c.getName() + " nicht gefunden");
     }
 
     try {
       return m.invoke(obj, args);
     } catch (IllegalAccessException e) {
-      fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (IllegalAccess)");
+      fail("Methode " + name + " in " + c.getName() + " nicht aufrufbar (IllegalAccess)");
     } catch (InvocationTargetException e) {
       if (e.getTargetException() instanceof RuntimeException) {
         throw (RuntimeException) e.getTargetException();
       } else {
-        fail("Methode " + name + " in " + c.getName() + "nicht aufrufbar (InvocationTarget)");
+        fail("Methode " + name + " in " + c.getName() + " nicht aufrufbar (InvocationTarget)");
       }
     }
     return null;
