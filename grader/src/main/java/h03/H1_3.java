@@ -97,25 +97,29 @@ public class H1_3 {
     }
 
     {
-      //crash bei setrelativeX
-      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
-      try {
-        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
-      } catch (RuntimeException e) {
-        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
-        assertFalse(TutorTests.checkStackTrace(e, "setX"), "setX trotz crash aufgerufen");
+      for(int r : new int[]{-1, 10}){
+        //crash bei setrelativeX
+        RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
+        try {
+          TutorTests.callMethod(RobotWithInitialState.class, "setRelativeX", new Class[]{Integer.TYPE}, rob, new Object[]{r});
+        } catch (RuntimeException e) {
+          assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+          assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+          assertFalse(TutorTests.checkStackTrace(e, "setX"), "setX trotz crash aufgerufen");
+        }
       }
     }
     {
-      //crash bei setrelativey
-      RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
-      try {
-        TutorTests.callMethod(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, rob, new Object[]{-1});
-      } catch (RuntimeException e) {
-        assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
-        assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
-        assertFalse(TutorTests.checkStackTrace(e, "setY"), "setY trotz crash aufgerufen");
+      for(int r : new int[]{-1, 10}) {
+        //crash bei setrelativey
+        RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 0);
+        try {
+          TutorTests.callMethod(RobotWithInitialState.class, "setRelativeY", new Class[]{Integer.TYPE}, rob, new Object[]{r});
+        } catch (RuntimeException e) {
+          assertTrue(TutorTests.checkStackTrace(e, "crash"), "crash() nicht aufgerufen");
+          assertFalse(TutorTests.checkStackTrace(e, "move"), "move trotz crash aufgerufen");
+          assertFalse(TutorTests.checkStackTrace(e, "setY"), "setY trotz crash aufgerufen");
+        }
       }
     }
   }
@@ -152,7 +156,7 @@ public class H1_3 {
     }
 
     {
-      //crash bei > 0
+      //crash
       RobotWithInitialState rob = new RobotWithInitialState(0, 0, Direction.UP, 10);
       try {
         TutorTests.callMethod(RobotWithInitialState.class, "setRelativeNumberOfCoins", new Class[]{Integer.TYPE}, rob, new Object[]{1});
