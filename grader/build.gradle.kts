@@ -1,4 +1,4 @@
 dependencies {
   implementation(project(":solution"))
-  implementation("org.sourcegrade:jagr-grader-api:0.1")
+  compileOnly("org.sourcegrade:jagr-grader-api:0.3-SNAPSHOT")
 }

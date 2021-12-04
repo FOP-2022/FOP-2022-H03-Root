@@ -1,0 +1,29 @@
+{
+  "name": "FOP-2022-H03",
+  "assignmentIds": [
+    "h03"
+  ],
+  "sourceSets": [
+    {
+      "name": "grader",
+      "files": [
+        "h03\\H1_1.java",
+        "h03\\H1_2.java",
+        "h03\\H1_3.java",
+        "h03\\H2_1.java",
+        "h03\\H3.java",
+        "h03\\H03_RubricProvider.java",
+        "h03\\TutorTests.java"
+      ]
+    },
+    {
+      "name": "solution",
+      "files": [
+        "h03\\Main.java",
+        "h03\\RobotWithInitialState.java",
+        "h03\\RobotWithInitialState2.java",
+        "h03\\TwinRobots.java"
+      ]
+    }
+  ]
+}
